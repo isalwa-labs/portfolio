@@ -10,7 +10,6 @@
             --text-color: #c9d1d9;
             --accent-green: #2ea043;
             --accent-cyan: #388bfd;
-            --accent-purple: #bc8cff;
             --terminal-header: #161b22;
         }
         
@@ -26,7 +25,7 @@
             color: var(--text-color);
             line-height: 1.6;
             padding: 2rem;
-            max-width: 950px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
@@ -35,7 +34,7 @@
             border-radius: 6px;
             overflow: hidden;
             background-color: var(--bg-color);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
 
         .terminal-header {
@@ -60,8 +59,8 @@
         }
 
         .prompt::before {
-            content: "isaac@root:~# ";
-            color: var(--accent-purple);
+            content: "isaac@ubuntu:~$ ";
+            color: var(--accent-green);
             font-weight: bold;
         }
 
@@ -110,10 +109,6 @@
         .highlight {
             color: var(--accent-green);
         }
-        
-        .danger {
-            color: #ff7b72;
-        }
 
         a {
             color: var(--accent-cyan);
@@ -139,7 +134,7 @@
         <div class="terminal-body">
             
             <!-- WHOAMI -->
-            <span class="prompt"></span><span class="command">whoami --verbose</span>
+            <span class="prompt"></span><span class="command">whoami</span>
             <div class="output">
                 <h1>Isaac Isalwa Ndungu</h1>
                 <h3>Secure Full-Stack Engineer | Ethical Hacker | Audio Engineer</h3>
@@ -147,15 +142,15 @@
             </div>
 
             <!-- SKILLS -->
-            <span class="prompt"></span><span class="command">cat /opt/skills/tech_stack.json</span>
+            <span class="prompt"></span><span class="command">cat skills.json</span>
             <div class="output">
-                <p><span class="highlight">"cybersecurity_&_networking"</span>: ["Ethical Hacking", "Linux Admin (Ubuntu/RHEL)", "Burp Suite", "Nikto", "Packet Tracer Analysis", "Network Troubleshooting", "SQL Injection Mitigation", "Wazuh SIEM", "TCP/IP"]</p>
-                <p><span class="highlight">"dev_&_databases"</span>: ["Kotlin", "Python", "Flutter", "Jetpack Compose", "Django MVC", "PostgreSQL", "SQLite (Offline Architecture)", "Advanced SQL Management", "Docker"]</p>
-                <p><span class="highlight">"audio_&_multimedia"</span>: ["Sound Engineering", "Cubase Pro 15", "Bus Routing & Saturation Profiling", "Vocal Mixing & Mastering", "AI Video Generation (Hedra, Google Veo)"]</p>
+                <p><span class="highlight">"cybersecurity_&_networking"</span>: ["Ethical Hacking", "Linux Admin (Ubuntu/RHEL)", "Burp Suite", "Nikto", "Packet Tracer Analysis", "Network Troubleshooting", "Network Administration", "SQL Injection Mitigation", "Wazuh SIEM"]</p>
+                <p><span class="highlight">"dev_&_databases"</span>: ["Kotlin", "Python", "Flutter", "Jetpack Compose", "Django MVC", "PostgreSQL", "SQLite", "Advanced SQL Database Management", "Docker"]</p>
+                <p><span class="highlight">"audio_&_multimedia"</span>: ["Sound Engineering", "Cubase Pro 15", "Bus Routing & Saturation Profiling", "Vocal Mixing & Mastering", "AI Video Generation"]</p>
             </div>
 
             <!-- EXPERIENCE -->
-            <span class="prompt"></span><span class="command">sudo ./execute_experience.sh</span>
+            <span class="prompt"></span><span class="command">history | grep experience</span>
             <div class="output">
                 <ul>
                     <li><strong>Freelance Security Software Engineer & Network Admin</strong> | Remote (2022-Present)<br>
@@ -166,27 +161,27 @@
             </div>
 
             <!-- PROJECTS -->
-            <span class="prompt"></span><span class="command">ls -la /var/www/projects/</span>
+            <span class="prompt"></span><span class="command">ls -l ./projects</span>
             <div class="output">
                 <h3>SiteSync Offline-First Mobile Architecture</h3>
                 <p>Architected a production-ready mobile application for logging complex field data in zero-connectivity environments. Deployed a Dockerized backend API for asynchronous batch data synchronization when internet access is restored.</p>
                 <div style="margin-top: 5px; margin-bottom: 15px;">
                     <span class="tech-tag">Flutter</span>
                     <span class="tech-tag">SQLite</span>
-                    <span class="tech-tag">Network Sync Logic</span>
+                    <span class="tech-tag">Docker</span>
                 </div>
                 
                 <h3>Advanced Vulnerability & Penetration Testing Framework</h3>
                 <p>Designed and deployed automated testing scripts targeting network vulnerabilities and database weaknesses. Utilized industry-standard offensive security tools to simulate attacks and patch exploits before deployment.</p>
                 <div style="margin-top: 5px; margin-bottom: 15px;">
-                    <span class="tech-tag danger">Ethical Hacking</span>
-                    <span class="tech-tag danger">Burp Suite</span>
-                    <span class="tech-tag danger">Nikto</span>
-                    <span class="tech-tag danger">SQLi Defense</span>
+                    <span class="tech-tag">Ethical Hacking</span>
+                    <span class="tech-tag">Burp Suite</span>
+                    <span class="tech-tag">Nikto</span>
+                    <span class="tech-tag">SQLi Defense</span>
                 </div>
 
                 <h3>Audio Production & Multimedia Engineering</h3>
-                <p>Engineered, mixed, and mastered professional audio tracks across diverse genres including Hip-Hop, Trap, and R&B. Managed complex bus routing, saturation plugin configurations, and high-fidelity audio track rendering.</p>
+                <p>Engineered, mixed, and mastered professional audio tracks across diverse genres. Managed complex bus routing, saturation plugin configurations, and high-fidelity audio track rendering.</p>
                 <div style="margin-top: 5px;">
                     <span class="tech-tag">Cubase Pro 15</span>
                     <span class="tech-tag">Sound Engineering</span>
@@ -194,8 +189,18 @@
                 </div>
             </div>
 
+            <!-- EDUCATION -->
+            <span class="prompt"></span><span class="command">cat education.txt</span>
+            <div class="output">
+                <ul>
+                    <li><strong>Bachelor of Science in Information Technology</strong> - Umma University, Kajiado (Jun 2025)</li>
+                    <li><strong>Google Cybersecurity Professional Certificate</strong> - Google Career Certificates (Jan 2025)</li>
+                    <li><strong>Cloud and Network Security (CNS)</strong> - CyberShujaa Training Program (Dec 2025)</li>
+                </ul>
+            </div>
+
             <!-- CONTACT -->
-            <span class="prompt"></span><span class="command">ping -c 1 contact_info</span>
+            <span class="prompt"></span><span class="command">./contact.sh</span>
             <div class="output">
                 <p>Location: Nairobi, Kenya</p>
                 <p>GitHub: <a href="https://github.com/isalwa-labs" target="_blank">github.com/isalwa-labs</a></p>
@@ -204,7 +209,7 @@
                 <p>Phone: +254 111 936 737</p>
             </div>
             
-            <span class="prompt"></span><span class="cursor" style="display:inline-block; width:8px; height:15px; background:var(--accent-purple); animation: blink 1s step-end infinite;"></span>
+            <span class="prompt"></span><span class="cursor" style="display:inline-block; width:8px; height:15px; background:var(--accent-green); animation: blink 1s step-end infinite;"></span>
         </div>
     </div>
 
