@@ -1,778 +1,385 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Isaac Isalwa - Portfolio</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <title>Isaac Isalwa Ndungu | Software Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mono: ['"Fira Code"', 'monospace'],
+                    },
+                    colors: {
+                        terminal: {
+                            bg: '#050505',
+                            dark: '#0a0a0a',
+                            panel: '#111111',
+                            border: '#333333',
+                            green: '#00ff41',
+                            blue: '#008f11',
+                            dim: '#003b00',
+                            text: '#e0e0e0',
+                            comment: '#6b7280',
+                            keyword: '#c678dd',
+                            string: '#98c379',
+                            function: '#61afef',
+                            tag: '#e06c75',
+                            variable: '#e5c07b'
+                        }
+                    },
+                    boxShadow: {
+                        'neon': '0 0 5px theme("colors.terminal.green"), 0 0 20px theme("colors.terminal.dim")',
+                        'neon-hover': '0 0 10px theme("colors.terminal.green"), 0 0 30px theme("colors.terminal.blue")',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary: #2a2d3e;
-            --secondary: #1a1c2a;
-            --accent: #64ffda;
-            --text: #e6e6e6;
-            --danger: #ff6b6b;
-        }
-
         body {
-            background-color: var(--secondary);
-            color: var(--text);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #050505;
+            color: #e0e0e0;
+            font-family: 'Fira Code', monospace;
+            overflow-x: hidden;
         }
 
-        html {
-            scroll-behavior: smooth;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00ff41; 
         }
 
-        /* Enhanced Navigation */
-        .navbar {
-            background-color: rgba(42, 45, 62, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem;
+        /* Blinking Cursor */
+        .cursor::after {
+            content: '█';
+            animation: blink 1s step-start infinite;
+            color: #00ff41;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
         }
 
-        .nav-link {
-            color: var(--text) !important;
-            margin: 0 1rem;
-            transition: all 0.3s;
-            position: relative;
+        /* Scanline effect overlay */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.3;
         }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--accent);
-            transition: width 0.3s;
+        .glow-text {
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
         }
 
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        /* Enhanced Sections */
-        section {
-            padding: 5rem 0;
-        }
-
-        .section-title {
-            color: var(--accent);
-            margin-bottom: 3rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            width: 50%;
-            height: 2px;
-            bottom: -10px;
-            left: 25%;
-            background-color: var(--accent);
-        }
-
-        /* Enhanced Hero Section */
-        #home {
-            min-height: 100vh;
+        /* IDE Code Block Styling */
+        .code-line {
             display: flex;
-            align-items: center;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            position: relative;
-            overflow: hidden;
+            counter-increment: line;
         }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.2s;
-            opacity: 0;
-            animation-fill-mode: forwards;
-        }
-
-        /* Enhanced Project Cards */
-        .project-card {
-            background-color: var(--primary);
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 2rem;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .project-img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .project-card:hover .project-img {
-            transform: scale(1.05);
-        }
-
-        .project-details {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            max-width: 800px;
-            background-color: var(--primary);
-            z-index: 1000;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-backdrop {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 999;
-        }
-
-        /* CV Section */
-        .cv-section {
-            background-color: var(--primary);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-top: 2rem;
-        }
-
-        .cv-upload {
-            border: 2px dashed var(--accent);
-            padding: 2rem;
-            text-align: center;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .cv-upload:hover {
-            background-color: rgba(100, 255, 218, 0.1);
-        }
-
-        /* Enhanced Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Skill Tags */
-        .skill-tag {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background-color: rgba(100, 255, 218, 0.1);
-            border-radius: 20px;
-            margin: 0.25rem;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-
-        .skill-tag:hover {
-            background-color: var(--accent);
-            color: var(--secondary);
-        }
-
-        /* Project Category Filters */
-        .category-filters {
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .category-filter {
-            background: none;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 0.5rem 1rem;
-            margin: 0.5rem;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .category-filter:hover,
-        .category-filter.active {
-            background-color: var(--accent);
-            color: var(--secondary);
-        }
-
-                /* Form Styles */
-        .contact-form {
-            background-color: var(--primary);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .form-control {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(100, 255, 218, 0.1);
-            color: var(--text);
-            padding: 0.8rem;
-            margin-bottom: 1.5rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.2);
-            color: var(--text);
-        }
-
-        .form-control::placeholder {
-            color: rgba(230, 230, 230, 0.5);
-        }
-
-        select.form-control {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364ffda' viewBox='0 0 16 16'%3E%3Cpath d='M8 11l-7-7h14l-7 7z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            padding-right: 2.5rem;
-        }
-
-        select.form-control option {
-            background-color: var(--primary);
-            color: var(--text);
-            padding: 0.8rem;
-        }
-
-        textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .cta-btn {
-            background-color: var(--accent);
-            color: var(--secondary);
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 5px;
-            transition: transform 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            font-weight: 500;
-            cursor: pointer;
+        .code-line::before {
+            content: counter(line);
+            color: #4b5563;
+            width: 2rem;
+            margin-right: 1.5rem;
+            text-align: right;
+            user-select: none;
         }
         
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            color: var(--secondary);
+        /* Section fade in */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-
-        /* Footer Styles */
-        footer {
-            background-color: var(--primary);
-            padding: 2.5rem 0;
-            margin-top: 2rem;
-            border-top: 1px solid rgba(100, 255, 218, 0.1);
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .footer-link {
-            color: var(--text);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .footer-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        .footer-link:hover {
-            color: var(--accent);
-        }
-
-        .footer-link:hover::after {
-            width: 100%;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .footer-social a {
-            color: var(--text);
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
-        .footer-social a:hover {
-            color: var(--accent);
-            transform: translateY(-3px);
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#" style="color: var(--accent)">Isaac Isalwa</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#cv">CV</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
+<body class="antialiased min-h-screen flex flex-col md:flex-row relative">
+    <div class="scanlines"></div>
+
+    <nav class="w-full md:w-64 bg-terminal-dark border-b md:border-b-0 md:border-r border-terminal-border flex-shrink-0 md:h-screen md:sticky top-0 z-40 flex flex-col shadow-2xl">
+        <div class="p-6 border-b border-terminal-border bg-black">
+            <h1 class="text-xl font-bold text-terminal-green glow-text">~/isalwa</h1>
+            <p class="text-xs text-terminal-comment mt-2">> system.status: <span class="text-terminal-green">ONLINE</span></p>
+        </div>
+        
+        <div class="flex-1 overflow-y-auto py-4">
+            <p class="px-6 text-xs text-terminal-comment uppercase tracking-widest mb-2 font-semibold">Directory</p>
+            <ul class="space-y-1">
+                <li>
+                    <a href="#home" class="block px-6 py-2 text-sm hover:bg-terminal-border hover:text-terminal-green transition-colors border-l-2 border-transparent hover:border-terminal-green">
+                        <span class="text-terminal-function">./</span>home.sh
+                    </a>
+                </li>
+                <li>
+                    <a href="#about" class="block px-6 py-2 text-sm hover:bg-terminal-border hover:text-terminal-green transition-colors border-l-2 border-transparent hover:border-terminal-green">
+                        <span class="text-terminal-function">./</span>about.json
+                    </a>
+                </li>
+                <li>
+                    <a href="#skills" class="block px-6 py-2 text-sm hover:bg-terminal-border hover:text-terminal-green transition-colors border-l-2 border-transparent hover:border-terminal-green">
+                        <span class="text-terminal-function">./</span>skills.yml
+                    </a>
+                </li>
+                <li>
+                    <a href="#projects" class="block px-6 py-2 text-sm hover:bg-terminal-border hover:text-terminal-green transition-colors border-l-2 border-transparent hover:border-terminal-green">
+                        <span class="text-terminal-function">./</span>projects.exe
+                    </a>
+                </li>
+                <li>
+                    <a href="#experience" class="block px-6 py-2 text-sm hover:bg-terminal-border hover:text-terminal-green transition-colors border-l-2 border-transparent hover:border-terminal-green">
+                        <span class="text-terminal-function">./</span>experience.log
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="p-6 border-t border-terminal-border text-xs text-terminal-comment">
+            <p>v2.0.26</p>
+            <p>Nairobi (EAT)</p>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 hero-text">
-                    <h1>Isaac Isalwa</h1>
-                    <p>Full-Stack Developer & Security Enthusiast</p>
-                    <p>Specializing in Android Development, Windows Applications, Machine Learning, and Security</p>
-                    <a href="#contact" class="cta-btn text-decoration-none">Get in touch</a>
-                </div>
+    <main class="flex-1 bg-terminal-bg p-4 md:p-8 overflow-x-hidden relative">
+        
+        <!-- Header / Hero Section -->
+        <section id="home" class="min-h-[80vh] flex flex-col justify-center max-w-4xl mx-auto fade-in">
+            <div class="mb-4">
+                <span class="text-terminal-comment"># Initialize developer profile</span>
             </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <h2 class="text-center section-title">About Me</h2>
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <img src="images/IMG_20250127_131451_HDR.jpg" alt="Isaac Isalwa" class="img-fluid rounded">
-                </div>
-                <div class="col-lg-8">
-                    <p>I'm a versatile developer with expertise in multiple domains including Android development, Windows applications, web development, machine learning, and security. My passion lies in creating robust, secure, and user-friendly applications that solve real-world problems.</p>
-                    <div class="mt-4">
-                        <h4>Technical Skills</h4>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Android Development</span>
-                            <span class="skill-tag">Kotlin</span>
-                            <span class="skill-tag">Java</span>
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">Machine Learning</span>
-                            <span class="skill-tag">Windows Development</span>
-                            <span class="skill-tag">Web Development</span>
-                            <span class="skill-tag">Bash Scripting</span>
-                            <span class="skill-tag">Security</span>
-                            <span class="skill-tag">HTML/CSS</span>
-                            <span class="skill-tag">JavaScript</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" style="background-color: var(--primary)">
-        <div class="container">
-            <h2 class="text-center section-title">My Projects</h2>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-white">
+                <span id="typewriter" class="cursor glow-text"></span>
+            </h1>
+            <h2 class="text-xl md:text-2xl text-terminal-function mb-8">
+                > Software Developer @ Nairobi, Kenya
+            </h2>
             
-            <!-- Project Filters -->
-            <div class="category-filters">
-                <button class="category-filter active" data-category="all">All</button>
-                <button class="category-filter" data-category="android">Android</button>
-                <button class="category-filter" data-category="windows">Windows</button>
-                <button class="category-filter" data-category="web">Web</button>
-                <button class="category-filter" data-category="ml">Machine Learning</button>
-                <button class="category-filter" data-category="security">Security</button>
+            <div class="bg-terminal-panel border border-terminal-border rounded-lg p-6 max-w-2xl shadow-lg">
+                <div class="flex items-center gap-2 mb-4 border-b border-terminal-border pb-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <span class="ml-2 text-xs text-terminal-comment">bash - isaac@localhost</span>
+                </div>
+                <div class="font-mono text-sm leading-relaxed">
+                    <p><span class="text-terminal-green">isaac@nairobi</span><span class="text-white">:</span><span class="text-blue-400">~</span><span class="text-white">$</span> ./run_intro.sh</p>
+                    <p class="mt-2 text-gray-300">Executing sequence...</p>
+                    <p class="mt-1 text-terminal-variable">Status: Ready to build scalable systems.</p>
+                    <p class="mt-4"><span class="text-terminal-green">isaac@nairobi</span><span class="text-white">:</span><span class="text-blue-400">~</span><span class="text-white">$</span> <span class="cursor"></span></p>
+                </div>
             </div>
+        </section>
 
-            <div class="row">
-                <!-- Android Project -->
-                <div class="col-lg-4 col-md-6 project-item" data-category="android">
-                    <div class="project-card">
-                        <img src="images/cosmic.png" alt="Android Project" class="project-img">
-                        <div class="p-3">
-                            <h4>Android Security App</h4>
-                            <p>A comprehensive security application for Android devices.</p>
-                            <button class="btn btn-sm view-project" style="background-color: var(--accent)" data-project="android-security">View Details</button>
-                        </div>
+        <section id="about" class="pt-24 pb-12 max-w-4xl mx-auto fade-in">
+            <h2 class="text-2xl font-bold text-terminal-green mb-6 border-b border-terminal-border pb-2">
+                <span class="text-terminal-comment">//</span> about.json
+            </h2>
+            
+            <div class="bg-terminal-panel rounded-lg border border-terminal-border p-4 md:p-6 overflow-x-auto shadow-neon hover:shadow-neon-hover transition-shadow duration-300">
+                <div class="code-line"><span class="text-white">{</span></div>
+                <div class="code-line ml-4"><span class="text-terminal-tag">"name"</span><span class="text-white">: </span><span class="text-terminal-string">"Isaac Isalwa Ndungu"</span><span class="text-white">,</span></div>
+                <div class="code-line ml-4"><span class="text-terminal-tag">"education"</span><span class="text-white">: {</span></div>
+                <div class="code-line ml-8"><span class="text-terminal-tag">"degree"</span><span class="text-white">: </span><span class="text-terminal-string">"Bachelor's in Information Technology"</span><span class="text-white">,</span></div>
+                <div class="code-line ml-8"><span class="text-terminal-tag">"graduation_year"</span><span class="text-white">: </span><span class="text-terminal-variable">2025</span></div>
+                <div class="code-line ml-4"><span class="text-white">},</span></div>
+                <div class="code-line ml-4"><span class="text-terminal-tag">"profile"</span><span class="text-white">: </span><span class="text-terminal-string">"Ambitious and goal-based IT graduate building products for real-world environments."</span><span class="text-white">,</span></div>
+                <div class="code-line ml-4"><span class="text-terminal-tag">"status"</span><span class="text-white">: </span><span class="text-terminal-string">"Actively seeking opportunities to innovate"</span></div>
+                <div class="code-line"><span class="text-white">}</span></div>
+            </div>
+        </section>
+
+        <section id="skills" class="pt-24 pb-12 max-w-4xl mx-auto fade-in">
+            <h2 class="text-2xl font-bold text-terminal-green mb-6 border-b border-terminal-border pb-2">
+                <span class="text-terminal-comment">#</span> skills.yml
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Mobile & Web -->
+                <div class="bg-terminal-panel border border-terminal-border rounded-lg p-6 group hover:border-terminal-green transition-colors">
+                    <h3 class="text-terminal-keyword mb-4 font-bold flex items-center">
+                        <span class="mr-2">[-]</span> Mobile & Web Development
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center"><span class="text-terminal-green mr-2">➜</span> Flutter</li>
+                        <li class="flex items-center"><span class="text-terminal-green mr-2">➜</span> Kotlin</li>
+                        <li class="flex items-center"><span class="text-terminal-green mr-2">➜</span> Jetpack Compose</li>
+                    </ul>
+                </div>
+
+                <!-- Backend & DB -->
+                <div class="bg-terminal-panel border border-terminal-border rounded-lg p-6 group hover:border-terminal-function transition-colors">
+                    <h3 class="text-terminal-function mb-4 font-bold flex items-center">
+                        <span class="mr-2">[-]</span> Backend & Database
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center"><span class="text-terminal-green mr-2">➜</span> Python Web Frameworks</li>
+                        <li class="flex items-center"><span class="text-terminal-green mr-2">➜</span> PostgreSQL</li>
+                        <li class="flex items-center"><span class="text-terminal-green mr-2">➜</span> SQLite</li>
+                    </ul>
+                </div>
+
+                <!-- AI & Multimedia -->
+                <div class="bg-terminal-panel border border-terminal-border rounded-lg p-6 md:col-span-2 group hover:border-terminal-tag transition-colors">
+                    <h3 class="text-terminal-tag mb-4 font-bold flex items-center">
+                        <span class="mr-2">[-]</span> AI & Multimedia
+                    </h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-1 bg-terminal-dark border border-terminal-border text-sm rounded hover:bg-terminal-green hover:text-black transition-all cursor-default">Google AI Studio</span>
+                        <span class="px-3 py-1 bg-terminal-dark border border-terminal-border text-sm rounded hover:bg-terminal-green hover:text-black transition-all cursor-default">Google Veo</span>
+                        <span class="px-3 py-1 bg-terminal-dark border border-terminal-border text-sm rounded hover:bg-terminal-green hover:text-black transition-all cursor-default">Cubase Pro 15</span>
+                        <span class="px-3 py-1 bg-terminal-dark border border-terminal-border text-sm rounded hover:bg-terminal-green hover:text-black transition-all cursor-default">3D Modeling</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="pt-24 pb-12 max-w-4xl mx-auto fade-in">
+            <h2 class="text-2xl font-bold text-terminal-green mb-6 border-b border-terminal-border pb-2">
+                <span class="text-terminal-comment">./</span> projects.exe
+            </h2>
+
+            <div class="space-y-6">
+                <!-- Project 1 -->
+                <div class="bg-terminal-dark border border-terminal-border border-l-4 border-l-terminal-green rounded-r-lg p-6 hover:bg-terminal-panel transition-colors">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-bold text-white">Mobile Conductor Payment & Transit Route Management App</h3>
+                        <span class="text-xs bg-terminal-green text-black px-2 py-1 rounded font-bold">EXEC</span>
+                    </div>
+                    <p class="text-terminal-comment text-sm mb-4">Fintech & Transportation Utility</p>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        A real-world mobile application designed to streamline payments for public transit conductors while providing robust route management capabilities. Built to handle rapid transactions and geographic route tracking.
+                    </p>
+                    <div class="flex gap-2 text-xs">
+                        <span class="text-terminal-function">#MobileApp</span>
+                        <span class="text-terminal-function">#Fintech</span>
+                        <span class="text-terminal-function">#Transit</span>
                     </div>
                 </div>
 
-                <!-- Windows Project -->
-                <div class="col-lg-4 col-md-6 project-item" data-category="windows">
-                    <div class="project-card">
-                        <img src="images/webmonitor.png" alt="Windows Project" class="project-img">
-                        <div class="p-3">
-                            <h4>Windows System Monitor</h4>
-                            <p>Advanced system monitoring tool for Windows.</p>
-                            <button class="btn btn-sm view-project" style="background-color: var(--accent)" data-project="windows-monitor">View Details</button>
-                        </div>
+                <!-- Project 2 -->
+                <div class="bg-terminal-dark border border-terminal-border border-l-4 border-l-terminal-function rounded-r-lg p-6 hover:bg-terminal-panel transition-colors">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-bold text-white">Automated Job Application Tool</h3>
+                        <span class="text-xs bg-terminal-function text-black px-2 py-1 rounded font-bold">SCRIPT</span>
                     </div>
-                </div>
-
-                <!-- ML Project -->
-                <div class="col-lg-4 col-md-6 project-item" data-category="ml">
-                    <div class="project-card">
-                        <img src="images/mlanalysis.jpeg" alt="ML Project" class="project-img">
-                        <div class="p-3">
-                            <h4>ML Security Analysis</h4>
-                            <p>Machine learning-based security threat detection system.</p>
-                            <button class="btn btn-sm view-project" style="background-color: var(--accent)" data-project="ml-security">View Details</button>
-                        </div>
+                    <p class="text-terminal-comment text-sm mb-4">Automation & API Integration</p>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        An automation utility integrating with LinkedIn and BrighterMonday platforms to streamline the job application process. Reduces manual entry and accelerates outreach for job seekers.
+                    </p>
+                    <div class="flex gap-2 text-xs">
+                        <span class="text-terminal-keyword">#Automation</span>
+                        <span class="text-terminal-keyword">#Python</span>
+                        <span class="text-terminal-keyword">#WebScraping</span>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CV Section -->
-    <section id="cv">
-        <div class="container">
-            <h2 class="text-center section-title">Curriculum Vitae</h2>
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <div class="cv-section">
-                        <h4 class="mb-4">Download My CV</h4>
-                        <div class="cv-upload">
-                            <i class="fas fa-file-pdf fa-3x mb-3"></i>
-                            <p>CV will be available soon</p>
-                            <small>Check back later for the updated version</small>
-                        </div>
+        <section id="experience" class="pt-24 pb-24 max-w-4xl mx-auto fade-in">
+            <h2 class="text-2xl font-bold text-terminal-green mb-6 border-b border-terminal-border pb-2">
+                <span class="text-terminal-comment">tail -f</span> experience.log
+            </h2>
+
+            <div class="font-mono text-sm bg-terminal-panel p-6 rounded-lg border border-terminal-border shadow-inner">
+                <div class="mb-6">
+                    <p class="text-terminal-comment">>> [TIMESTAMP: PREVIOUS] LOG ENTRY INITIALIZED</p>
+                    <div class="mt-2 pl-4 border-l border-terminal-comment">
+                        <h4 class="text-terminal-variable font-bold text-lg">Peer Teacher & Dean Assistant</h4>
+                        <p class="text-white mt-1">@ Munyu Mixed Day Secondary School</p>
+                        <p class="text-gray-400 mt-2 leading-relaxed">
+                            > Assisted the Dean in administrative duties and student management.<br>
+                            > Guided peers as a teacher, breaking down complex concepts and fostering a collaborative learning environment.<br>
+                            > Developed strong communication, leadership, and organizational skills in a high-activity environment.
+                        </p>
                     </div>
                 </div>
+                <p class="text-terminal-green animate-pulse">>> END OF LOG</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Project Details Modals -->
-    <div class="modal-backdrop"></div>
-    
-    <!-- Android Project Details -->
-    <div class="project-details" id="android-security">
-        <h3>Android Security App</h3>
-        <img src="/api/placeholder/800/400" alt="Android Project Full" class="img-fluid mb-4">
-        <div class="mb-4">
-            <h5>Technology Stack</h5>
-            <div class="skill-tags mb-3">
-                <span class="skill-tag">Kotlin</span>
-                <span class="skill-tag">Android SDK</span>
-                <span class="skill-tag">Firebase</span>
-                <span class="skill-tag">Security APIs</span>
-            </div>
-        </div>
-        <p>Detailed description of the Android security application, including its features, implementation challenges, and solutions...</p>
-        <button class="btn close-modal" style="background-color: var(--danger); color: white;">Close</button>
-    </div>
+        <footer class="mt-12 py-6 border-t border-terminal-border text-center text-terminal-comment text-sm">
+            <p>echo "Built by Isaac Isalwa Ndungu" > footer.txt</p>
+            <p class="mt-2">&copy; <script>document.write(new Date().getFullYear())</script> All Systems Operational.</p>
+        </footer>
 
-<!-- Windows Project Details (continued) -->
-<div class="project-details" id="windows-monitor">
-    <h3>Windows System Monitor</h3>
-    <img src="/api/placeholder/800/400" alt="Windows Project Full" class="img-fluid mb-4">
-    <div class="mb-4">
-        <h5>Technology Stack</h5>
-        <div class="skill-tags mb-3">
-            <span class="skill-tag">.NET</span>
-            <span class="skill-tag">C#</span>
-            <span class="skill-tag">WPF</span>
-            <span class="skill-tag">Windows APIs</span>
-        </div>
-    </div>
-    <p>A comprehensive Windows system monitoring tool that provides real-time analysis of system performance, resource usage, and security metrics. Features include:</p>
-    <ul>
-        <li>Real-time performance monitoring</li>
-        <li>Process management and analysis</li>
-        <li>Resource usage tracking</li>
-        <li>Security threat detection</li>
-    </ul>
-    <div class="mt-4">
-        <a href="#" class="btn btn-sm me-2" style="background-color: var(--accent)">View Source Code</a>
-        <button class="btn btn-sm close-modal" style="background-color: var(--danger); color: white;">Close</button>
-    </div>
-</div>
+    </main>
 
-<!-- ML Project Details -->
-<div class="project-details" id="ml-security">
-    <h3>ML Security Analysis System</h3>
-    <img src="/api/placeholder/800/400" alt="ML Project Full" class="img-fluid mb-4">
-    <div class="mb-4">
-        <h5>Technology Stack</h5>
-        <div class="skill-tags mb-3">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">TensorFlow</span>
-            <span class="skill-tag">Scikit-learn</span>
-            <span class="skill-tag">Pandas</span>
-            <span class="skill-tag">NumPy</span>
-        </div>
-    </div>
-    <p>An advanced machine learning system designed to detect and analyze security threats in real-time. The system employs various ML algorithms to identify patterns and potential security breaches.</p>
-    <h5>Key Features:</h5>
-    <ul>
-        <li>Real-time threat detection using ML models</li>
-        <li>Anomaly detection in system behavior</li>
-        <li>Predictive analysis for potential security risks</li>
-        <li>Automated reporting and alerting system</li>
-    </ul>
-    <div class="mt-4">
-        <a href="#" class="btn btn-sm me-2" style="background-color: var(--accent)">View Documentation</a>
-        <a href="#" class="btn btn-sm me-2" style="background-color: var(--accent)">View Source Code</a>
-        <button class="btn btn-sm close-modal" style="background-color: var(--danger); color: white;">Close</button>
-    </div>
-</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Typewriter Effect for Header
+            const textToType = "Isaac Isalwa Ndungu";
+            const typewriterElement = document.getElementById('typewriter');
+            let i = 0;
 
-<!-- Additional Project: Terminal Security Tools -->
-<div class="project-details" id="terminal-security">
-    <h3>Terminal-based Security Suite</h3>
-    <img src="/api/placeholder/800/400" alt="Security Tools Project Full" class="img-fluid mb-4">
-    <div class="mb-4">
-        <h5>Technology Stack</h5>
-        <div class="skill-tags mb-3">
-            <span class="skill-tag">Bash</span>
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">Shell Scripting</span>
-            <span class="skill-tag">Linux</span>
-            <span class="skill-tag">Network Security</span>
-        </div>
-    </div>
-    <p>A collection of terminal-based security tools designed for system administrators and security professionals. This suite includes various utilities for security testing, monitoring, and system hardening.</p>
-    <h5>Tool Categories:</h5>
-    <ul>
-        <li>Network Security Analysis Tools</li>
-        <li>System Hardening Scripts</li>
-        <li>Log Analysis Utilities</li>
-        <li>Security Compliance Checkers</li>
-        <li>Automated Security Response Tools</li>
-    </ul>
-    <div class="mt-4">
-        <a href="#" class="btn btn-sm me-2" style="background-color: var(--accent)">View Project</a>
-        <a href="#" class="btn btn-sm me-2" style="background-color: var(--accent)">Documentation</a>
-        <button class="btn btn-sm close-modal" style="background-color: var(--danger); color: white;">Close</button>
-    </div>
-</div>
+            function typeWriter() {
+                if (i < textToType.length) {
+                    typewriterElement.innerHTML += textToType.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            }
+            
+            // Start typing effect slightly after load
+            setTimeout(typeWriter, 500);
 
-<!-- Web Development Project -->
-<div class="project-details" id="web-project">
-    <h3>Full-Stack Web Application</h3>
-    <img src="/api/placeholder/800/400" alt="Web Project Full" class="img-fluid mb-4">
-    <div class="mb-4">
-        <h5>Technology Stack</h5>
-        <div class="skill-tags mb-3">
-            <span class="skill-tag">React</span>
-            <span class="skill-tag">Node.js</span>
-            <span class="skill-tag">Express</span>
-            <span class="skill-tag">MongoDB</span>
-            <span class="skill-tag">REST APIs</span>
-        </div>
-    </div>
-    <p>A modern full-stack web application showcasing best practices in web development, security, and user experience design.</p>
-    <h5>Features:</h5>
-    <ul>
-        <li>Responsive UI with React</li>
-        <li>RESTful API architecture</li>
-        <li>Real-time data updates</li>
-        <li>Secure authentication system</li>
-        <li>Performance optimization</li>
-    </ul>
-    <div class="mt-4">
-        <a href="#" class="btn btn-sm me-2" style="background-color: var(--accent)">Live Demo</a>
-        <a href="#" class="btn btn-sm me-2" style="background-color: var(--accent)">Source Code</a>
-        <button class="btn btn-sm close-modal" style="background-color: var(--danger); color: white;">Close</button>
-    </div>
-</div>
+            // Fade-in animation on scroll using Intersection Observer
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
 
-<!-- Services Section -->
-<section id="services">
-    <div class="container">
-        <h2 class="text-center section-title">Services</h2>
-        <div class="row">
-            <!-- Android Development -->
-            <div class="col-lg-4 col-md-6">
-                <div class="service-card">
-                    <i class="fab fa-android service-icon"></i>
-                    <h4>Android Development</h4>
-                    <p>Custom Android applications built with modern architecture patterns and security best practices.</p>
-                </div>
-            </div>
-            <!-- Windows Development -->
-            <div class="col-lg-4 col-md-6">
-                <div class="service-card">
-                    <i class="fab fa-windows service-icon"></i>
-                    <h4>Windows Applications</h4>
-                    <p>Desktop applications and system utilities built for Windows, focusing on performance and usability.</p>
-                </div>
-            </div>
-            <!-- Security Solutions -->
-            <div class="col-lg-4 col-md-6">
-                <div class="service-card">
-                    <i class="fas fa-shield-alt service-icon"></i>
-                    <h4>Security Solutions</h4>
-                    <p>Security auditing, penetration testing, and development of security-focused applications.</p>
-                </div>
-            </div>
-            <!-- Machine Learning -->
-            <div class="col-lg-4 col-md-6">
-                <div class="service-card">
-                    <i class="fas fa-brain service-icon"></i>
-                    <h4>Machine Learning</h4>
-                    <p>Implementation of ML models for various applications, including security and pattern recognition.</p>
-                </div>
-            </div>
-            <!-- Web Development -->
-            <div class="col-lg-4 col-md-6">
-                <div class="service-card">
-                    <i class="fas fa-code service-icon"></i>
-                    <h4>Web Development</h4>
-                    <p>Full-stack web applications with focus on security, scalability, and user experience.</p>
-                </div>
-            </div>
-            <!-- Consulting -->
-            <div class="col-lg-4 col-md-6">
-                <div class="service-card">
-                    <i class="fas fa-laptop-code service-icon"></i>
-                    <h4>Technical Consulting</h4>
-                    <p>Expert advice on software architecture, security implementations, and best practices.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, observerOptions);
 
-/* Update the contact form button and get in touch button */
-<section id="contact" style="background-color: var(--primary)">
-    <div class="container">
-        <h2 class="text-center section-title">Get in Touch</h2>
-        <div class="row">
-            <div class="col-lg-6 mx-auto">
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <input type="email" class="form-control" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <select class="form-control">
-                                <option value="">Select Service</option>
-                                <option value="android">Android Development</option>
-                                <option value="windows">Windows Development</option>
-                                <option value="security">Security Solutions</option>
-                                <option value="ml">Machine Learning</option>
-                                <option value="web">Web Development</option>
-                                <option value="consulting">Technical Consulting</option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
-                        </div>
-                        <button type="submit" class="cta-btn w-100">Send Message</button>
-                    </form>
-                </div>
-                <div class="social-links text-center mt-4">
-                    <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
 
-<footer>
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-info">
-                <p class="mb-0">&copy; 2025 Isaac Isalwa. All rights reserved.</p>
-                <div class="footer-social">
-                    <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
-            <div class="footer-links">
-                <a href="#" class="footer-link">Privacy Policy</a>
-                <a href="#" class="footer-link">Terms of Service</a>
-                <a href="#" class="footer-link">Contact</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- Bootstrap JS and dependencies -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-
-<!-- Custom JavaScript for form handling -->
-<script>
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Add your form submission logic here
-        alert('Thank you for your message. I will get back to you soon!');
-        this.reset();
-    });
-
-    // Add smooth scrolling to all links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 </body>
 </html>
-
